@@ -32,6 +32,8 @@ namespace TBQuestGame
 
         #region PROPERTIES
 
+      
+
         public Player Player
         {
             get { return _player; }
@@ -56,6 +58,16 @@ namespace TBQuestGame
                 _currentLocationInformation = _currentLocation.Description;
                 OnPropertyChanged(nameof(CurrentLocation));
                 OnPropertyChanged(nameof(CurrentLocationInformation));
+            }
+        }
+
+        public GameItemQuantity CurrentGameItem
+        {
+            get { return _currentGameItem; }
+            set
+            {
+                _currentGameItem = value;
+                OnPropertyChanged(nameof(CurrentGameItem));
             }
         }
 
@@ -182,7 +194,6 @@ namespace TBQuestGame
             _currentLocationInformation = CurrentLocation.Description;
             _player.UpdateInventoryCategories();
             _player.CalculateWealth();
-
         }
 
         /// <summary>
@@ -191,19 +202,16 @@ namespace TBQuestGame
         /// </summary>
         private void UpdateAvailableTravelPoints()
         {
-
             // reset travel location information
             NorthLocation = null;
             EastLocation = null;
             SouthLocation = null;
             WestLocation = null;
 
-
             // north location exists
             if (_gameMap.NorthLocation() != null)
             {
                 Location nextNorthLocation = _gameMap.NorthLocation();
-
 
                 // location generally accessible or player has required conditions
                 if (nextNorthLocation.Accessible == true || PlayerCanAccessLocation(nextNorthLocation))
@@ -211,14 +219,12 @@ namespace TBQuestGame
                     NorthLocation = nextNorthLocation;
                 }
             }
-
-
+            
             // east location exists
             if (_gameMap.EastLocation() != null)
             {
                 Location nextEastLocation = _gameMap.EastLocation();
-
-
+                
                 // location generally accessible or player has required conditions
                 if (nextEastLocation.Accessible == true || PlayerCanAccessLocation(nextEastLocation))
                 {
@@ -226,21 +232,18 @@ namespace TBQuestGame
                 }
             }
 
-
             // south location exists
             if (_gameMap.SouthLocation() != null)
             {
                 Location nextSouthLocation = _gameMap.SouthLocation();
-
-
+                
                 // location generally accessible or player has required conditions
                 if (nextSouthLocation.Accessible == true || PlayerCanAccessLocation(nextSouthLocation))
                 {
                     SouthLocation = nextSouthLocation;
                 }
             }
-
-
+            
             // west location exists
             if (_gameMap.WestLocation() != null)
             {
@@ -403,9 +406,7 @@ namespace TBQuestGame
             // subtract from location and add to inventory
             if (_currentGameItem != null && _currentLocation.GameItems.Contains(_currentGameItem))
             {
-                //
                 // cast selected game item 
-                //
                 GameItemQuantity selectedGameItemQuantity = _currentGameItem as GameItemQuantity;
 
                 _currentLocation.RemoveGameItemQuantityFromLocation(selectedGameItemQuantity);
@@ -462,11 +463,12 @@ namespace TBQuestGame
         {
             switch (_currentGameItem.GameItem)
             {
+                //todo- Not Use make it Add to inventory
                 case Potion potion:
                     ProcessPotionUse(potion);
                     break;
                 case Loot loot:
-                    ProcessRelicUse(loot);
+                    ProcessLootUse(loot);
                     break;
                 default:
                     break;
@@ -477,7 +479,7 @@ namespace TBQuestGame
         /// process the effects of using the relic
         /// </summary>
         /// <param name="potion">potion</param>
-        private void ProcessRelicUse(Loot loot)
+        private void ProcessLootUse(Loot loot)
         {
             string message;
 

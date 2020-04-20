@@ -21,9 +21,7 @@ namespace TBQuestGame.PresentationLayer
         public GameSessionView(GameSessionViewModel gameSessionViewModel)
         {
             _gameSessionViewModel = gameSessionViewModel;
-
             InitializeWindowTheme();
-
             InitializeComponent();
         }
 
@@ -54,15 +52,15 @@ namespace TBQuestGame.PresentationLayer
 
         private void PutDownButton_Click(object sender, RoutedEventArgs e)
         {
-            if (LocationItemsDataGrid.SelectedItem  != null)
+            if (PlayerDataTabControl.SelectedItem  != null)
             {
                 _gameSessionViewModel.RemoveItemFromInventory();
             }
         }
-
+        
         private void UseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (LocationItemsDataGrid.SelectedItem != null)
+            if (PlayerDataTabControl.SelectedItem != null)
             {
                 _gameSessionViewModel.OnUseGameItem();
             }
@@ -72,7 +70,7 @@ namespace TBQuestGame.PresentationLayer
         {
             if (LocationItemsDataGrid.SelectedItem != null)
             {
-                _gameSessionViewModel.OnUseGameItem();
+                _gameSessionViewModel.AddItemToInventory();
             }
         }
     }

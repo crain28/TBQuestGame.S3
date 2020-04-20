@@ -142,6 +142,7 @@ namespace TBQuestGame.Models
         public Player()
         {
             _locationsVisited = new List<Location>();
+            _inventory = new ObservableCollection<GameItemQuantity>();
             _weapons = new ObservableCollection<GameItemQuantity>();
             _treasure = new ObservableCollection<GameItemQuantity>();
             _potions = new ObservableCollection<GameItemQuantity>();
@@ -254,7 +255,7 @@ namespace TBQuestGame.Models
                 article = "an";
             }
 
-            return $"Hello, my name is {_name} and I am {article} {_title} for the Aion Project.";
+            return $"Hello, my name is {_name} and I am {article} {_title} for the Quest Game.";
         }
 
         #endregion
